@@ -1,7 +1,7 @@
-(defpackage #:limbic-main
+(defpackage #:limbic-browser
   (:use #:cl #:clog)
   (:export main))
-(in-package :limbic-main)
+(in-package :limbic-browser)
 
 (defun on-new-window (body)
   "Handler for each new web browser window."
