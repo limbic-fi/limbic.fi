@@ -4,6 +4,7 @@
 
 - [Common Lisp HyperSpec](http://www.lispworks.com/documentation/HyperSpec/Front/)
 - [SBCL - Steel Bank Common Lisp](http://www.sbcl.org/)
+- [Quicklisp](https://www.quicklisp.org/beta/)
 - [SLIME - The Superior Lisp Interaction Mode for Emacs](https://common-lisp.net/project/slime/)
 - [Github slime/slime](https://github.com/slime/slime)
 - [CLOG - Common Lisp Onmificent GUI](https://github.com/rabbibotton/clog)
