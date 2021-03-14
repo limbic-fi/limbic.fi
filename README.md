@@ -30,7 +30,7 @@ M-x package-install RET slime RET
 
 In your Emacs config somewhere:
 
-```
+```lisp
 (setq inferior-lisp-program "sbcl")
 ```
 
@@ -38,6 +38,25 @@ And then run SLIME:
 
 ```
 M-x slime
+```
+
+## SBCL
+
+You can configure how SBCL works at startup with the file `~/.sbclrc`.
+If you don't find the file there, check what SBCL tells you with:
+
+```lisp
+(SB-IMPL::USERINIT-PATHNAME)
+```
+
+The main bit you'll probably want to add there is some paths for ASDF:
+
+```lisp
+(setf asdf:*central-registry*
+      (list* '*default-pathname-defaults*
+             #p"C:/Programming/Lisp/"
+             #p"C:/Programming/limbic.fi/"
+             asdf:*central-registry*))
 ```
 
 ## OpenSSL
