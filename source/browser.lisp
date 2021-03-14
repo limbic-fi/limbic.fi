@@ -15,5 +15,6 @@
 
 (defun main ()
   (initialize #'on-new-window
-              :static-root (merge-pathnames "./static-files/" (asdf:system-source-directory :limbic)))
+              :static-root (merge-pathnames "./static/"
+                                            (asdf:system-source-directory :limbic)))
   (open-browser))
