@@ -6,7 +6,7 @@
 (defun on-new-window (body)
   "Handler for each new web browser window."
   (setf (title (html-document body)) "limbic.fi")
-  (let ((hello-element (create-section body :h1 :content "Hello, world!!!")))
+  (let ((hello-element (create-section body :tt :content "Hello, world!!!")))
     (set-on-click hello-element
                   (lambda (object)
                     (declare (ignore object))
