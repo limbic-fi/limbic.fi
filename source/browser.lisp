@@ -3,18 +3,18 @@
   (:export main))
 (in-package :limbic/browser)
 
+(defun static-root ()
+  "Points to the static root file directory."
+  (merge-pathnames "./static/" (asdf:system-source-directory :limbic)))
+
 (defun on-new-window (body)
   "Handler for each new web browser window."
   (setf (title (html-document body)) "limbic.fi")
-  (let ((hello-element (create-section body :tt :content "Hello, world!!!")))
-    (set-on-click hello-element
-                  (lambda (object)
-                    (declare (ignore object))
-                    (setf (color hello-element) :green))))
+  (create-section body :h1 :content "limbic.fi")
+  (create-section body :tt :content "Coming soon ...")
   (run body))
 
 (defun main ()
   (initialize #'on-new-window
-              :static-root (merge-pathnames "./static/"
-                                            (asdf:system-source-directory :limbic)))
+              :static-root (static-root))
   (open-browser))

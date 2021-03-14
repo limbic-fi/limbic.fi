@@ -1,13 +1,23 @@
 @font-face {
+    font-family: FiraCode-Bold;
+    src: url(/fonts/FiraCode-Bold.ttf);
+}
+
+@font-face {
     font-family: FiraCode-Regular;
     src: url(/fonts/FiraCode-Regular.ttf);
 }
 
 body {
     background-color: black;
+    color: lightblue;
 }
 
 tt {
     font-family: FiraCode-Regular;
-    color: lightblue;
+}
+
+h1 {
+    font-family: FiraCode-Bold;
+    text-align: center;
 }
