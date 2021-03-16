@@ -34,4 +34,6 @@
   :author author
   :license copyright
   :depends-on ("clog" "hunchentoot" "limbic")
-  :components ((:module "source" :components ((:file "browser")))))
+  :components ((:module "source"
+                :components ((:module "browser"
+                              :components ((:file "main")))))))
