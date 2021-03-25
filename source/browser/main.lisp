@@ -15,9 +15,14 @@
 
 (defun ens-owner (object)
   (form-dialog object "ENS Owner"
-               '(("ENS Name" "name" :text "cgore.eth"))
+               '(("ENS Name" "ens-name" :text "cgore.eth"))
                (lambda (results)
-                 (alert-dialog object results))))
+                 (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
+                                     w1.eth.ens.getOwner('cgore.eth').then((owner)=>{document.getElementById('ens-owner-result').innerHTML = owner;})")
+                 (alert-dialog object ;;results
+                               "<div id='ens-owner-result'>...</div>"
+                               :width 750
+                             ))))
 
 (defun help-menu-about (object)
   (let ((about (create-gui-window object
