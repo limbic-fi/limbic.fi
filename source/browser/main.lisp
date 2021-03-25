@@ -13,22 +13,11 @@
   ;; 0xF3C95410b8F61ae7cBA3Fe0925F64bCa7871e4d5
   )
 
-(defun ens-lookup (object)
-  (let ((ens-lookup-window (create-gui-window object
-                                              :title "ENS Lookup"
-                                              :content
-                                              "<div>
-                                                 <h1>ENS Lookup</h1>
-                                              </div>"
-                                              :hidden t
-                                              :width 400
-                                              :height 400)))
-    (window-center ens-lookup-window)
-    (setf (visiblep ens-lookup-window) t)
-    (set-on-window-can-size ens-lookup-window
-                            (lambda (object)
-                              (declare (ignore object))
-                              ()))))
+(defun ens-owner (object)
+  (form-dialog object "ENS Owner"
+               '(("ENS Name" "name" :text "cgore.eth"))
+               (lambda (results)
+                 (alert-dialog object results))))
 
 (defun help-menu-about (object)
   (let ((about (create-gui-window object
@@ -55,7 +44,7 @@
          (ens-menu    (create-gui-menu-drop-down menu :content "ENS"))
          (help-menu   (create-gui-menu-drop-down menu :content "Help")))
     (create-gui-menu-item ens-menu :content "ENS lookup cgore.eth" :on-click 'ens-lookup-cgore)
-    (create-gui-menu-item ens-menu :content "ENS lookup" :on-click 'ens-lookup)
+    (create-gui-menu-item ens-menu :content "ENS Owner" :on-click 'ens-owner)
     (create-gui-menu-item help-menu :content "About" :on-click 'help-menu-about)))
 
 (defun on-new-window (body)
