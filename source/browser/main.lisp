@@ -8,7 +8,6 @@
   (merge-pathnames "./static/" (asdf:system-source-directory :limbic)))
 
 (defun ens-lookup-cgore (object)
-  ;; You need to be connected to MetaMask or similar in the browser first.
   (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');")
   (js-execute object "w1.eth.ens.getOwner('cgore.eth').then((owner)=>{alert('cgore.eth is ' + owner)})")
   ;; 0xF3C95410b8F61ae7cBA3Fe0925F64bCa7871e4d5
