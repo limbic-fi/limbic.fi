@@ -34,6 +34,7 @@
 (defun on-new-window (body)
   "Handler for each new web browser window."
   (setf (title (html-document body)) "limbic.fi")
+  (load-script (html-document body) "https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js")
   (clog-gui-initialize body)
   (menu-bar body)
   (run body))
