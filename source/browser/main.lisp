@@ -7,22 +7,22 @@
   "Points to the static root file directory."
   (merge-pathnames "./static/" (asdf:system-source-directory :limbic)))
 
-(defun ens-lookup-cgore (object)
-  (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');")
-  (js-execute object "w1.eth.ens.getOwner('cgore.eth').then((owner)=>{alert('cgore.eth is ' + owner)})")
-  ;; 0xF3C95410b8F61ae7cBA3Fe0925F64bCa7871e4d5
-  )
-
-(defun ens-owner (object)
-  (form-dialog object "ENS Owner"
+(defun ens-owner-lookup (object)
+  (form-dialog object nil
                '(("ENS Name" "ens-name" :text "cgore.eth"))
                (lambda (results)
-                 (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
-                                     w1.eth.ens.getOwner('cgore.eth').then((owner)=>{document.getElementById('ens-owner-result').innerHTML = owner;})")
-                 (alert-dialog object ;;results
-                               "<div id='ens-owner-result'>...</div>"
-                               :width 750
-                             ))))
+                 (let* ((ens-name (second (find "ens-name" results :key #'first :test #'string=)))
+                        (result-id (symbol-name (gensym))))
+                   (alert-dialog object ;;results
+                                 (format nil "<div id='~A'>...</div>" result-id)
+                                 :title (concatenate 'string "ENS Owner Lookup - " ens-name)
+                                 :width 500
+                                 :height 200)
+                   (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');")
+                   (js-execute object (format nil "w1.eth.ens.getOwner('~A').then((owner)=>{document.getElementById('~A').innerHTML = owner;})"
+                                              ens-name result-id))))
+               :title "ENS Owner Lookup"
+               :height 200))
 
 (defun help-menu-about (object)
   (let ((about (create-gui-window object
@@ -48,8 +48,7 @@
          (limbic-menu (create-gui-menu-drop-down menu :content "limbic.fi"))
          (ens-menu    (create-gui-menu-drop-down menu :content "ENS"))
          (help-menu   (create-gui-menu-drop-down menu :content "Help")))
-    (create-gui-menu-item ens-menu :content "ENS lookup cgore.eth" :on-click 'ens-lookup-cgore)
-    (create-gui-menu-item ens-menu :content "ENS Owner" :on-click 'ens-owner)
+    (create-gui-menu-item ens-menu :content "ENS Owner Lookup" :on-click 'ens-owner-lookup)
     (create-gui-menu-item help-menu :content "About" :on-click 'help-menu-about)))
 
 (defun on-new-window (body)
