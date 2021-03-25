@@ -72,7 +72,8 @@ The main bit you'll probably want to add there is some paths for ASDF:
              asdf:*central-registry*))
 ```
 
-And I just add symlinks for each ASDF file I care about.
+And I just add symlinks for each ASDF file I care about in the `~/programming/lisp/systems` directory.
+Alternatively, you could add lots of paths there instead.
 
 ### OpenSSL
 
