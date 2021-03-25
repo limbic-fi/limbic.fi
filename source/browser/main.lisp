@@ -7,6 +7,13 @@
   "Points to the static root file directory."
   (merge-pathnames "./static/" (asdf:system-source-directory :limbic)))
 
+(defun ens-lookup-cgore (object)
+  ;; You need to be connected to MetaMask or similar in the browser first.
+  (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');")
+  (js-execute object "w1.eth.ens.getOwner('cgore.eth').then((owner)=>{alert('cgore.eth is ' + owner)})")
+  ;; 0xF3C95410b8F61ae7cBA3Fe0925F64bCa7871e4d5
+  )
+
 (defun help-menu-about (object)
   (let ((about (create-gui-window object
                                   :title   "About"
@@ -28,7 +35,9 @@
 (defun menu-bar (body)
   (let* ((menu (create-gui-menu-bar body))
          (limbic-menu (create-gui-menu-drop-down menu :content "limbic.fi"))
+         (ens-menu    (create-gui-menu-drop-down menu :content "ENS"))
          (help-menu   (create-gui-menu-drop-down menu :content "Help")))
+    (create-gui-menu-item ens-menu :content "ENS lookup cgore.eth" :on-click 'ens-lookup-cgore)
     (create-gui-menu-item help-menu :content "About" :on-click 'help-menu-about)))
 
 (defun on-new-window (body)
