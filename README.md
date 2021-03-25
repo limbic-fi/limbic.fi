@@ -42,7 +42,7 @@ And then run SLIME:
 M-x slime
 ```
 
-## SBCL
+### SBCL
 
 You can configure how SBCL works at startup with the file `~/.sbclrc`.
 If you don't find the file there, check what SBCL tells you with:
@@ -53,6 +53,8 @@ If you don't find the file there, check what SBCL tells you with:
 
 The main bit you'll probably want to add there is some paths for ASDF:
 
+#### My Windows Setup:
+
 ```lisp
 (setf asdf:*central-registry*
       (list* '*default-pathname-defaults*
@@ -61,7 +63,18 @@ The main bit you'll probably want to add there is some paths for ASDF:
              asdf:*central-registry*))
 ```
 
-## OpenSSL
+#### My Linux Setup:
+
+```lisp
+(setf asdf:*central-registry*
+      (list* '*default-pathname-defaults*
+             #p"~/programming/lisp/systems/"
+             asdf:*central-registry*))
+```
+
+And I just add symlinks for each ASDF file I care about.
+
+### OpenSSL
 
 If you see this:
 
@@ -78,7 +91,7 @@ Then you are missing OpenSSL.
 - https://wiki.openssl.org/index.php/Binaries
 - https://slproweb.com/products/Win32OpenSSL.html
 
-## SQLite
+### SQLite
 
 If you see this:
 
@@ -96,6 +109,34 @@ Then you are missing SQLite.
 - Get the download with the DLL.
 - Extract it somewhere, I used `C:\Windows\System32\`, but other places will work.
 - Add that to your path so the DLL can be found.
+
+## VirtualBox
+
+Settings > Network > Adapter 1 > Advanced > Port Forwarding
+
+Forward host port 8080
+to guest port 8080
+
+So that then you can browse in your host machine.
+
+## Running Locally
+
+Run SLIME in Emacs:
+
+```
+M-x slime
+```
+
+In the SLIME REPL:
+
+```
+(asdf:operate 'asdf:load-op ':limbic/browser)
+(in-package :limbic/browser)
+(main)
+```
+
+You then should be able to connect to the webpage frontend via 
+http://127.0.0.1:8080/
 
 ## License
 
