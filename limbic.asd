@@ -35,7 +35,9 @@
   :license copyright
   :depends-on ("clog" "hunchentoot" "limbic")
   :components ((:module "source"
-                :components ((:module "browser"
-                                      :components ((:file "ens")
-                                                   (:file "limbic")
-                                                   (:file "main" :depends-on ("ens" "limbic"))))))))
+                        :components ((:module "browser"
+                                              :components ((:file "ens")
+                                                           (:file "ethereum")
+                                                           (:file "help")
+                                                           (:file "limbic")
+                                                           (:file "main" :depends-on ("ens" "ethereum" "help" "limbic"))))))))

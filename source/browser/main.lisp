@@ -8,11 +8,11 @@
   (merge-pathnames "./static/" (asdf:system-source-directory :limbic)))
 
 (defun menu-bar (body)
-  (let* ((menu-bar (create-gui-menu-bar body))
-         (_             (limbic/browser/limbic:menu menu-bar))
-         (ethereum-menu (create-gui-menu-drop-down menu-bar :content "Ethereum"))
-         (_             (limbic/browser/ens:menu menu-bar))
-         (help-menu     (create-gui-menu-drop-down menu-bar :content "Help")))))
+  (let ((menu-bar (create-gui-menu-bar body)))
+    (limbic/browser/limbic:menu   menu-bar)
+    (limbic/browser/ethereum:menu menu-bar)
+    (limbic/browser/ens:menu      menu-bar)
+    (limbic/browser/help:menu     menu-bar)))
 
 (defun on-new-window (body)
   "Handler for each new web browser window."
