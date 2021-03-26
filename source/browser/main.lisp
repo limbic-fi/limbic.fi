@@ -23,6 +23,8 @@
   (run body))
 
 (defun main ()
-  (initialize #'on-new-window
-              :static-root (static-root))
+  (initialize #'on-new-window :static-root (static-root)))
+
+(defun main-with-browser ()
+  (main)
   (open-browser))
