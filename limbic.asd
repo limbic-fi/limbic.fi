@@ -36,4 +36,5 @@
   :depends-on ("clog" "hunchentoot" "limbic")
   :components ((:module "source"
                 :components ((:module "browser"
-                              :components ((:file "main")))))))
+                                      :components ((:file "ens")
+                                                   (:file "main" :depends-on ("ens"))))))))
