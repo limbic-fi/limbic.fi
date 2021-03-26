@@ -11,16 +11,15 @@
   (form-dialog object nil
                '(("ENS Name" "ens-name" :text "cgore.eth"))
                (lambda (results)
-                 (let* ((ens-name (second (find "ens-name" results :key #'first :test #'string=)))
-                        (result-id (symbol-name (gensym))))
+                 (let* ((ens-name (second (find "ens-name" results :key #'first :test #'string=))))
                    (alert-dialog object ;;results
-                                 (format nil "<div id='~A'>...</div>" result-id)
+                                 "<div id='ens-owner-lookup'>...</div>"
                                  :title (concatenate 'string "ENS Owner Lookup - " ens-name)
                                  :width 500
                                  :height 200)
                    (js-execute object "w1 = new Web3(Web3.givenProvider || 'ws://localhost:8545');")
-                   (js-execute object (format nil "w1.eth.ens.getOwner('~A').then((owner)=>{document.getElementById('~A').innerHTML = owner;})"
-                                              ens-name result-id))))
+                   (js-execute object (format nil "w1.eth.ens.getOwner('~A').then((owner)=>{document.getElementById('ens-owner-lookup').innerHTML = owner;})"
+                                              ens-name))))
                :title "ENS Owner Lookup"
                :height 200))
 
