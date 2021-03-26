@@ -37,4 +37,5 @@
   :components ((:module "source"
                 :components ((:module "browser"
                                       :components ((:file "ens")
-                                                   (:file "main" :depends-on ("ens"))))))))
+                                                   (:file "limbic")
+                                                   (:file "main" :depends-on ("ens" "limbic"))))))))
