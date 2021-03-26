@@ -23,7 +23,7 @@
                :title "ENS Owner Lookup"
                :height 200))
 
-(defun help-menu-about (object)
+(defun limbic-menu-about (object)
   (let ((about (create-gui-window object
                                   :title   "About"
                                   :content
@@ -44,11 +44,12 @@
 
 (defun menu-bar (body)
   (let* ((menu (create-gui-menu-bar body))
-         (limbic-menu (create-gui-menu-drop-down menu :content "limbic.fi"))
-         (ens-menu    (create-gui-menu-drop-down menu :content "ENS"))
-         (help-menu   (create-gui-menu-drop-down menu :content "Help")))
-    (create-gui-menu-item ens-menu :content "ENS Owner Lookup" :on-click 'ens-owner-lookup)
-    (create-gui-menu-item help-menu :content "About" :on-click 'help-menu-about)))
+         (limbic-menu   (create-gui-menu-drop-down menu :content "limbic.fi"))
+         (ethereum-menu (create-gui-menu-drop-down menu :content "Ethereum"))
+         (ens-menu      (create-gui-menu-drop-down menu :content "ENS"))
+         (help-menu     (create-gui-menu-drop-down menu :content "Help")))
+    (create-gui-menu-item limbic-menu :content "About" :on-click 'limbic-menu-about)
+    (create-gui-menu-item ens-menu :content "ENS Owner Lookup" :on-click 'ens-owner-lookup)))
 
 (defun on-new-window (body)
   "Handler for each new web browser window."
