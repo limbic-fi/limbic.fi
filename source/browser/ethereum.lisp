@@ -10,7 +10,6 @@
 
   (defun update-connection-text (object)
     (let ((address (limbic/javascript/ethereum:selected-address object)))
-      (format t "address is ~A~&" address)
       (cond ((and (not address) connected?)
              (setf (inner-html connection-button) unconnected-text)
              (setf connected? nil)
@@ -18,7 +17,8 @@
             ((and address (not connected?))
              (setf (inner-html connection-button) connected-text)
              (setf connected? t)
-             (format t "Now connected to your ethereum wallet.~&")))))
+             (format t "Now connected to your ethereum wallet.~&")
+             (format t "address is ~A~&" address)))))
 
   (defun connection-text-updater (object)
     (bordeaux-threads:make-thread
