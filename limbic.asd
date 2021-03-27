@@ -33,7 +33,7 @@
   :version #.(version-string)
   :author author
   :license copyright
-  :depends-on ("clog" "hunchentoot" "limbic")
+  :depends-on ("clog" "hunchentoot" "limbic" "sigma")
   :components ((:module "source"
                         :components ((:module "browser"
                                               :components ((:file "ens")
