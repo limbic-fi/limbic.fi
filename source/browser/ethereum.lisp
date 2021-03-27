@@ -13,11 +13,15 @@
       (connection-button nil))
 
   (defun connect-to-a-wallet (object)
-    (if (not (limbic/javascript/ethereum:selected-address object))
-        (progn (format t "trying to connect ...~&")
-               (limbic/javascript/ethereum:eth-request-accounts object))
-        (format t "already connected to ~A~&"
-                (limbic/javascript/ethereum:selected-address object))))
+    (if (limbic/javascript/ethereum:selected-address object)
+        (alert-dialog object
+                      (format nil "Already connected to a wallet<br/>
+                                   ~A<br/>
+                                   You can disconnect in your wallet program."
+                              (limbic/javascript/ethereum:selected-address object))
+                      :width 500 :height 200
+                      :title "Already Connected")
+        (limbic/javascript/ethereum:eth-request-accounts object)))
 
   (defun connection-button (menu)
     (setf connection-button
