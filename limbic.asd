@@ -40,4 +40,7 @@
                                                            (:file "ethereum")
                                                            (:file "help")
                                                            (:file "limbic")
-                                                           (:file "main" :depends-on ("ens" "ethereum" "help" "limbic"))))))))
+                                                           (:file "main" :depends-on ("ens" "ethereum" "help" "limbic")))
+                                              :depends-on ("javascript"))
+                                     (:module "javascript"
+                                              :components ((:file "ethereum")))))))
