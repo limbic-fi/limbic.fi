@@ -3,8 +3,22 @@
   (:export menu))
 (in-package :limbic/browser/ethereum)
 
+(defun shortened-ethereum-address (ethereum-address)
+  (let* ((front (string-upcase (subseq ethereum-address 2 6)))
+         (len (length ethereum-address))
+         (back  (string-upcase (subseq ethereum-address (- len 4) len))))
+    (concatenate 'string "0x" front "..." back)))
+
+(defun connected-text (ethereum-address)
+  (format nil "Connected ~A <div id='connectedWalletIdenticon' class='identicon'></div>"
+          (shortened-ethereum-address ethereum-address)))
+
+(defun attach-blockie-for-address (object ethereum-address)
+  (js-execute object
+              (format nil "connectedWalletIdenticon.style.backgroundImage = 'url(' + hqx(blockies.create({ seed:'~A' ,size: 8,scale: 1}),4).toDataURL()+')'"
+                      ethereum-address)))
+
 (let ((unconnected-text "Connect to your Ethereum Wallet")
-      (connected-text "Connected!")
       (connected? nil)
       (connection-button nil))
 
@@ -15,7 +29,8 @@
              (setf connected? nil)
              (format t "No longer connected to your ethereum wallet.~&"))
             ((and address (not connected?))
-             (setf (inner-html connection-button) connected-text)
+             (setf (inner-html connection-button) (connected-text address))
+             (attach-blockie-for-address object address)
              (setf connected? t)
              (format t "Now connected to your ethereum wallet.~&")
              (format t "address is ~A~&" address)))))
