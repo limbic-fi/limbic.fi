@@ -10,7 +10,7 @@
     (concatenate 'string "0x" front "..." back)))
 
 (defun connected-text (ethereum-address)
-  (format nil "Connected ~A <div id='connectedWalletIdenticon' class='identicon'></div>"
+  (format nil "MetaMask Connected ~A <div id='connectedWalletIdenticon' class='identicon'></div>"
           (shortened-ethereum-address ethereum-address)))
 
 (defun attach-blockie-for-address (object ethereum-address)
@@ -18,7 +18,7 @@
               (format nil "connectedWalletIdenticon.style.backgroundImage = 'url(' + hqx(blockies.create({ seed:'~A' ,size: 8,scale: 1}),4).toDataURL()+')'"
                       ethereum-address)))
 
-(let ((unconnected-text "Connect to your Ethereum Wallet")
+(let ((unconnected-text "Connect to your MetaMask Ethereum Wallet")
       (connected? nil)
       (connection-button nil))
 
