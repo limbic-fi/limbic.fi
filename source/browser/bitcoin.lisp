@@ -4,7 +4,7 @@
 (in-package :limbic/browser/bitcoin)
 
 (defun usd-price-content ()
-  (format nil "USD/BTC $~A" (zapper-fi:usd/btc)))
+  (format nil "Dollar USD/BTC $~A" (zapper-fi:usd/btc)))
 
 (defun xag-price-content ()
   (format nil "Silver XAG/BTC ~A" (zapper-fi:xag/btc)))
