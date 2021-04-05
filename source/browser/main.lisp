@@ -10,6 +10,7 @@
 (defun menu-bar (body)
   (let ((menu-bar (create-gui-menu-bar body)))
     (limbic/browser/limbic:menu   menu-bar)
+    (limbic/browser/bitcoin:menu  menu-bar)
     (limbic/browser/ethereum:menu menu-bar)
     (limbic/browser/ens:menu      menu-bar)
     (limbic/browser/help:menu     menu-bar)))
