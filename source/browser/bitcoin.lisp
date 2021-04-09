@@ -4,13 +4,13 @@
 (in-package :limbic/browser/bitcoin)
 
 (defun usd-price-content ()
-  (format nil "Dollar USD/BTC $~A" (zapper-fi:usd/btc)))
+  (format nil "USD/BTC $~2$" (zapper-fi:usd/btc)))
 
 (defun xag-price-content ()
-  (format nil "Silver XAG/BTC ~A" (zapper-fi:xag/btc)))
+  (format nil "Silver/BTC ~A toz" (zapper-fi:xag/btc)))
 
 (defun xau-price-content ()
-  (format nil "Gold XAU/BTC ~A" (zapper-fi:xau/btc)))
+  (format nil "Gold/BTC ~3$ toz" (zapper-fi:xau/btc)))
 
 (defun usd-price (menu)
   (create-gui-menu-item menu :content (usd-price-content) :html-id "usd-btc-price"))
