@@ -19,21 +19,20 @@
                       ethereum-address)))
 
 (let ((unconnected-text "Connect to your MetaMask Ethereum Wallet")
-      (connected? nil)
-      (connection-button nil))
+      (connection-button nil)
+      (connected? nil))
 
   (defun update-connection-text (object)
     (let ((address (limbic/javascript/ethereum:selected-address object)))
       (cond ((and (not address) connected?)
-             (setf (inner-html connection-button) unconnected-text)
              (setf connected? nil)
-             (format t "No longer connected to your ethereum wallet.~&"))
+             (setf (inner-html connection-button) unconnected-text)
+             (format t "No longer connected to your ethereum wallet, address ~A.~&" address))
             ((and address (not connected?))
+             (setf connected? t)
              (setf (inner-html connection-button) (connected-text address))
              (attach-blockie-for-address object address)
-             (setf connected? t)
-             (format t "Now connected to your ethereum wallet.~&")
-             (format t "address is ~A~&" address)))))
+             (format t "Now connected to your ethereum wallet, address ~A.~&" address)))))
 
   (defun connection-text-updater (object)
     (bordeaux-threads:make-thread
