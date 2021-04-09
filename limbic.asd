@@ -33,7 +33,7 @@
   :version #.(version-string)
   :author author
   :license copyright
-  :depends-on ("clog" "hunchentoot" "limbic" "sigma" "zapper-fi")
+  :depends-on ("clog" "function-cache" "hunchentoot" "limbic" "sigma" "zapper-fi")
   :components ((:module "source"
                         :components ((:module "browser"
                                               :components ((:file "bitcoin")
