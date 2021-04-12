@@ -25,7 +25,7 @@
   (run body))
 
 (defun main ()
-  (initialize #'on-new-window :static-root (static-root)))
+  (initialize #'on-new-window :static-root (static-root) :static-boot-js t))
 
 (defun main-with-browser ()
   (main)
