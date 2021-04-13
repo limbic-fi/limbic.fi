@@ -4,22 +4,22 @@
 (in-package :limbic/browser/bitcoin)
 
 (defun usd-price-content ()
-  (format nil "USD/BTC $~2$" (zapper-fi:usd/btc)))
+  (format nil "BTC-USD $~2$" (zapper-fi:btc-usd)))
 
 (defun xag-price-content ()
-  (format nil "Silver/BTC ~A toz" (zapper-fi:xag/btc)))
+  (format nil "BTC-Silver ~A toz" (zapper-fi:btc-xag)))
 
 (defun xau-price-content ()
-  (format nil "Gold/BTC ~3$ toz" (zapper-fi:xau/btc)))
+  (format nil "BTC-Gold ~3$ toz" (zapper-fi:btc-xau)))
 
 (defun usd-price (menu)
-  (create-gui-menu-item menu :content (usd-price-content) :html-id "usd-btc-price"))
+  (create-gui-menu-item menu :content (usd-price-content) :html-id "btc-usd-price"))
 
 (defun xag-price (menu)
-  (create-gui-menu-item menu :content (xag-price-content) :html-id "xag-btc-price"))
+  (create-gui-menu-item menu :content (xag-price-content) :html-id "btc-xag-price"))
 
 (defun xau-price (menu)
-  (create-gui-menu-item menu :content (xau-price-content) :html-id "xau-btc-price"))
+  (create-gui-menu-item menu :content (xau-price-content) :html-id "btc-xau-price"))
 
 (defun menu (menu-bar)
   (let ((menu (create-gui-menu-drop-down menu-bar :content "Bitcoin")))
