@@ -3,6 +3,24 @@
   (:export menu))
 (in-package :limbic/browser/ethereum)
 
+(defun usd-price-content ()
+  (format nil "ETH/USD $~2$" (zapper-fi:eth/usd)))
+
+(defun xag-price-content ()
+  (format nil "ETH/Silver ~A toz" (zapper-fi:eth/xag)))
+
+(defun xau-price-content ()
+  (format nil "ETH/Gold ~3$ toz" (zapper-fi:eth/xau)))
+
+(defun usd-price (menu)
+  (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-usd-price"))
+
+(defun xag-price (menu)
+  (create-gui-menu-item menu :content (xag-price-content) :html-id "eth-xag-price"))
+
+(defun xau-price (menu)
+  (create-gui-menu-item menu :content (xau-price-content) :html-id "eth-xau-price"))
+
 (defun shortened-ethereum-address (ethereum-address)
   (let* ((front (string-upcase (subseq ethereum-address 2 6)))
          (len (length ethereum-address))
@@ -63,4 +81,7 @@
 
 (defun menu (menu-bar)
   (let ((menu (create-gui-menu-drop-down menu-bar :content "Ethereum")))
-    (connection-button  menu)))
+    (connection-button  menu)
+    (usd-price menu)
+    (xau-price menu)
+    (xag-price menu)))
