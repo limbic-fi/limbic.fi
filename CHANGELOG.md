@@ -1,3 +1,7 @@
+# v0.2.0 - April 4, 2021
+
+- Adding Ether prices to the pull-down menus.
+
 # v0.1.1 - April 3, 2021
 
 Fixing the ratios display names for BTC versus USD, silver, gold.

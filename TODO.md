@@ -6,3 +6,5 @@
 - The price quotes in the Bitcoin menu should auto-update.
 - There should be Ethereum price quotes vs. USD, gold, and silver under the
   Ethereum menu just like under Bitcoin.
+- https://www.cryptonator.com/api is a very simple API for a lot of the other
+  coins, we should use them.
