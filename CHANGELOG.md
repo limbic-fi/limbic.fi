@@ -1,3 +1,7 @@
+# v0.2.2 - April 17, 2021
+
+Copypasta fix.
+
 # v0.2.1 - April 17, 2021
 
 Fixing the connection data item for the metamask wallet connection.
