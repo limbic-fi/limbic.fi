@@ -1,7 +1,10 @@
-(defpackage #:limbic/browser/ethereum
-  (:use #:cl #:clog #:clog-gui)
+(defpackage :limbic/browser/ethereum
+  (:use :common-lisp :clog :clog-gui)
   (:export menu))
 (in-package :limbic/browser/ethereum)
+
+(defun btc-price-content ()
+  (format nil "ETH/BTC ~3$" (zapper-fi:eth/btc)))
 
 (defun usd-price-content ()
   (format nil "ETH/USD $~2$" (zapper-fi:eth/usd)))
@@ -11,6 +14,9 @@
 
 (defun xau-price-content ()
   (format nil "ETH/Gold ~3$ toz" (zapper-fi:eth/xau)))
+
+(defun btc-price (menu)
+  (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-btc-price"))
 
 (defun usd-price (menu)
   (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-usd-price"))
@@ -36,52 +42,51 @@
               (format nil "connectedWalletIdenticon.style.backgroundImage = 'url(' + hqx(blockies.create({ seed:'~A' ,size: 8,scale: 1}),4).toDataURL()+')'"
                       ethereum-address)))
 
-(let ((unconnected-text "Connect to your MetaMask Ethereum Wallet")
-      (connection-button nil)
-      (connected? nil))
+(defvar *unconnected-text* "Connect to your MetaMask Ethereum Wallet")
 
-  (defun update-connection-text (object)
-    (let ((address (limbic/javascript/ethereum:selected-address object)))
-      (cond ((and (not address) connected?)
-             (setf connected? nil)
-             (setf (inner-html connection-button) unconnected-text)
-             (format t "No longer connected to your ethereum wallet, address ~A.~&" address))
-            ((and address (not connected?))
-             (setf connected? t)
-             (setf (inner-html connection-button) (connected-text address))
-             (attach-blockie-for-address object address)
-             (format t "Now connected to your ethereum wallet, address ~A.~&" address)))))
+(defun update-connection-text (object)
+  (let ((address (limbic/javascript/ethereum:selected-address object)))
+    (cond ((and (not address)
+                (connection-data-item object "connected?"))
+           (setf (connection-data-item object "connected?") nil)
+           (setf (inner-html (connection-data-item object "connection-button")) *unconnected-text*))
+          ((and address (not (connection-data-item object "connected?")))
+           (setf (connection-data-item object "connected?") t)
+           (setf (inner-html (connection-data-item object "connection-button")) (connected-text address))
+           (attach-blockie-for-address object address)))))
 
-  (defun connection-text-updater (object)
-    (bordeaux-threads:make-thread
-     (lambda ()
-       (loop
-          (update-connection-text object)
-          (sleep 1)))
-     :name "connection-text-updater"))
+(defun connection-text-updater (object)
+  (bordeaux-threads:make-thread
+   (lambda ()
+     (setf (connection-data-item object "connected?") nil)
+     (loop
+        (update-connection-text object)
+        (sleep 15)))
+   :name "connection-text-updater"))
 
-  (defun connect-to-a-wallet (object)
-    (if (limbic/javascript/ethereum:selected-address object)
-        (alert-dialog object
-                      (format nil "Already connected to a wallet<br/>
+(defun connect-to-a-wallet (object)
+  (if (limbic/javascript/ethereum:selected-address object)
+      (alert-dialog object
+                    (format nil "Already connected to a wallet<br/>
                                    ~A<br/>
                                    You can disconnect in your wallet program."
-                              (limbic/javascript/ethereum:selected-address object))
-                      :width 500 :height 200
-                      :title "Already Connected")
-        (limbic/javascript/ethereum:eth-request-accounts object)))
+                            (limbic/javascript/ethereum:selected-address object))
+                    :width 500 :height 200
+                    :title "Already Connected")
+      (limbic/javascript/ethereum:eth-request-accounts object)))
 
-  (defun connection-button (menu)
-    (setf connection-button
-          (create-gui-menu-item menu
-                                :content unconnected-text
-                                :html-id "ethereum-connect-menu-item"
-                                :on-click 'connect-to-a-wallet))
-    (connection-text-updater menu)))
+(defun connection-button (menu)
+  (setf (connection-data-item menu "connection-button")
+        (create-gui-menu-item menu
+                              :content *unconnected-text*
+                              :html-id "ethereum-connect-menu-item"
+                              :on-click 'connect-to-a-wallet))
+  (connection-text-updater menu))
 
 (defun menu (menu-bar)
   (let ((menu (create-gui-menu-drop-down menu-bar :content "Ethereum")))
-    (connection-button  menu)
+    (connection-button menu)
+    (btc-price menu)
     (usd-price menu)
     (xau-price menu)
     (xag-price menu)))

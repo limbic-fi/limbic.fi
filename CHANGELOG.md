@@ -1,6 +1,10 @@
+# v0.2.1 - April 17, 2021
+
+Fixing the connection data item for the metamask wallet connection.
+
 # v0.2.0 - April 4, 2021
 
-- Adding Ether prices to the pull-down menus.
+Adding Ether prices to the pull-down menus.
 
 # v0.1.1 - April 3, 2021
 
