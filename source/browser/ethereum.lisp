@@ -16,7 +16,7 @@
   (format nil "ETH/Gold ~3$ toz" (zapper-fi:eth/xau)))
 
 (defun btc-price (menu)
-  (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-btc-price"))
+  (create-gui-menu-item menu :content (btc-price-content) :html-id "eth-btc-price"))
 
 (defun usd-price (menu)
   (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-usd-price"))
