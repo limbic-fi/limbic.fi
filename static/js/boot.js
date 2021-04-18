@@ -37,7 +37,7 @@ function Setup_ws() {
     } catch (e) {
       console.error (e.message);
     }
-  }
+  };
 
   ws.onerror = function (event) {
     console.log ("onerror: reconnect");
@@ -46,12 +46,12 @@ function Setup_ws() {
     ws.onopen = function (event) {
       console.log ("onerror: reconnect successful");
       Setup_ws();
-    }
+    };
     ws.onclose = function (event) {
       console.log ("onerror: reconnect failure");
       Shutdown_ws(event);
-    }
-  }
+    };
+  };
 
   ws.onclose = function (event) {
     console.log ("onclose: reconnect");
@@ -60,12 +60,12 @@ function Setup_ws() {
     ws.onopen = function (event) {
       console.log ("onclose: reconnect successful");
       Setup_ws();
-    }
+    };
     ws.onclose = function (event) {
       console.log ("onclose: reconnect failure");
       Shutdown_ws(event);
-    }
-  }
+    };
+  };
 }
 
 $( document ).ready(function() {
@@ -80,19 +80,19 @@ $( document ).ready(function() {
   clog['navigator']=navigator;
   clog['document']=window.document;
   clog['location']=window.location;
-  
+
   s = s.split("+").join(" ");
-  
-  while (tokens = r.exec(s)) {
+
+  while ((tokens = r.exec(s))) {
     params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
   }
-  
+
   if (location.protocol == "https:") {
     adr = "wss://" + location.hostname;
   } else {
     adr = "ws://" + location.hostname;
   }
-  
+
   if (location.port != "") { adr = adr + ":" + location.port; }
   adr = adr + "/clog";
 
@@ -108,7 +108,7 @@ $( document ).ready(function() {
     ws.onopen = function (event) {
       console.log ("connection successful");
       Setup_ws();
-    }
+    };
     pingerid = setInterval (function () {Ping_ws ();}, 10000);
   } else {
     document.writeln ("If you are seeing this your browser or your connection to the internet is blocking websockets.");
