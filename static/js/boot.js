@@ -105,11 +105,16 @@ $( document ).ready(function() {
   }
 
   if (ws != null) {
-    ws.onopen = function (event) {
-      console.log ("connection successful");
-      Setup_ws();
-    };
-    pingerid = setInterval (function () {Ping_ws ();}, 10000);
+    console.log("We've got a non-null websocket.");
+    try {
+      ws.onopen = function (event) {
+        console.log ("connection successful");
+        Setup_ws();
+      };
+      pingerid = setInterval (function () {Ping_ws ();}, 10000);
+    } catch (e) {
+      console.log("Some error condition while trying to configure our websocket.");
+    }
   } else {
     document.writeln ("If you are seeing this your browser or your connection to the internet is blocking websockets.");
   }
