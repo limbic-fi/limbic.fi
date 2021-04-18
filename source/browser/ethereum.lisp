@@ -9,30 +9,6 @@
    (address :accessor address
             :initform nil)))
 
-(defun btc-price-content ()
-  (format nil "ETH/BTC ~3$" (zapper-fi:eth/btc)))
-
-(defun usd-price-content ()
-  (format nil "ETH/USD $~2$" (zapper-fi:eth/usd)))
-
-(defun xag-price-content ()
-  (format nil "ETH/Silver ~A toz" (zapper-fi:eth/xag)))
-
-(defun xau-price-content ()
-  (format nil "ETH/Gold ~3$ toz" (zapper-fi:eth/xau)))
-
-(defun btc-price (menu)
-  (create-gui-menu-item menu :content (btc-price-content) :html-id "eth-btc-price"))
-
-(defun usd-price (menu)
-  (create-gui-menu-item menu :content (usd-price-content) :html-id "eth-usd-price"))
-
-(defun xag-price (menu)
-  (create-gui-menu-item menu :content (xag-price-content) :html-id "eth-xag-price"))
-
-(defun xau-price (menu)
-  (create-gui-menu-item menu :content (xau-price-content) :html-id "eth-xau-price"))
-
 (defun shortened-ethereum-address (ethereum-address)
   (let* ((front (string-upcase (subseq ethereum-address 2 6)))
          (len (length ethereum-address))
@@ -105,7 +81,7 @@
     (setf (connection-data-item menu "ethereum-wallet")
           (make-instance 'ethereum-wallet))
     (connection-button menu)
-    (btc-price menu)
-    (usd-price menu)
-    (xau-price menu)
-    (xag-price menu)))
+    (limbic/browser/prices:gui-menu-entry menu "ETH/BTC ~3$"       'zapper-fi:eth/btc)
+    (limbic/browser/prices:gui-menu-entry menu "ETH/USD $~2$"      'zapper-fi:eth/usd)
+    (limbic/browser/prices:gui-menu-entry menu "ETH/Gold ~3$ toz"  'zapper-fi:eth/xau)
+    (limbic/browser/prices:gui-menu-entry menu "ETH/Silver ~A toz" 'zapper-fi:eth/xag)))

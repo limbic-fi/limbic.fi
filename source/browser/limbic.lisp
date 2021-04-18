@@ -1,9 +1,14 @@
-(defpackage #:limbic/browser/limbic
-  (:use #:cl #:clog #:clog-gui)
-  (:export menu))
+(defpackage :limbic/browser/limbic
+  (:use :common-lisp :clog :clog-gui)
+  (:export :menu))
 (in-package :limbic/browser/limbic)
 
-(defun about (object)
+(defun current-version (menu)
+  (create-gui-menu-item menu
+                        :content (concatenate 'string "limbic.fi " (limbic/git:git-describe))
+                        :html-id "git-describe"))
+
+(defun about/on-click (object)
   (let ((about (create-gui-window object
                                   :title   "About"
                                   :content
@@ -22,6 +27,10 @@
                               (declare (ignore object))
                               ()))))
 
+(defun about (object)
+  (create-gui-menu-item object :content "About" :on-click 'about/on-click))
+
 (defun menu (menu-bar)
   (let ((menu (create-gui-menu-drop-down menu-bar :content "limbic.fi")))
-    (create-gui-menu-item menu :content "About" :on-click 'about)))
+    (current-version menu)
+    (about           menu)))

@@ -1,3 +1,8 @@
+# v0.3.0 - April 18, 2021
+
+- Adding the site's version to the site menu.
+- Simplifying and unifying the price menu entry logic.
+
 # v0.2.4 - April 17, 2021
 
 Fixing Ethereum wallet connections.

@@ -13,7 +13,7 @@
 (defparameter author "Christopher Mark Gore <cgore@cgore.com>, <cgore.eth>")
 (defparameter copyright "Copyright © 2021 Christopher Mark Gore, all rights reserved.")
 (defparameter version-major    0)
-(defparameter version-minor    1)
+(defparameter version-minor    3)
 (defparameter version-revision 0)
 
 (defun version-list ()
@@ -36,12 +36,14 @@
   :depends-on ("clog" "function-cache" "hunchentoot" "limbic" "sigma" "zapper-fi")
   :components ((:module "source"
                         :components ((:module "browser"
-                                              :components ((:file "bitcoin")
+                                              :components ((:file "bitcoin" :depends-on ("prices"))
                                                            (:file "ens")
-                                                           (:file "ethereum")
+                                                           (:file "ethereum" :depends-on ("prices"))
                                                            (:file "help")
                                                            (:file "limbic")
-                                                           (:file "main" :depends-on ("bitcoin" "ens" "ethereum" "help" "limbic")))
-                                              :depends-on ("javascript"))
+                                                           (:file "main" :depends-on ("bitcoin" "ens" "ethereum" "help" "limbic"))
+                                                           (:file "prices"))
+                                              :depends-on ("git" "javascript"))
+                                     (:file "git")
                                      (:module "javascript"
                                               :components ((:file "ethereum")))))))
