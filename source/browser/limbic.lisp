@@ -4,9 +4,7 @@
 (in-package :limbic/browser/limbic)
 
 (defun current-version (menu)
-  (create-gui-menu-item menu
-                        :content (concatenate 'string "limbic.fi " (limbic/git:git-describe))
-                        :html-id "git-describe"))
+  (create-gui-menu-item menu :content (concatenate 'string "limbic.fi " (limbic/git:git-describe))))
 
 (defun about/on-click (object)
   (let ((about (create-gui-window object

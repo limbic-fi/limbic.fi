@@ -1,4 +1,4 @@
-# v0.3.0 - April 18, 2021
+# v0.3.0 - WIP
 
 - Adding the site's version to the site menu.
 - Simplifying and unifying the price menu entry logic.
