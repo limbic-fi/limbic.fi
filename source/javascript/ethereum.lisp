@@ -7,7 +7,7 @@
 (in-package :limbic/javascript/ethereum)
 
 (defun ethereum-defined? (object)
-  (not (null (js-execute object "typeof ethereum"))))
+  (not (string= "null" (js-query object "typeof ethereum"))))
 
 (defun eth-request-accounts (object)
   (when (ethereum-defined? object)
@@ -15,7 +15,7 @@
 
 (defun network-version (object)
   (when (ethereum-defined? object)
-    (js-execute object "ethereum.networkVersion")))
+    (js-query object "ethereum.networkVersion")))
 
 (defun selected-address (object)
   (when (ethereum-defined? object)

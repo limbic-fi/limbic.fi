@@ -3,6 +3,12 @@
   (:export menu))
 (in-package :limbic/browser/ethereum)
 
+(defclass ethereum-wallet ()
+  ((connected? :accessor connected?
+               :initform nil)
+   (address :accessor address
+            :initform nil)))
+
 (defun btc-price-content ()
   (format nil "ETH/BTC ~3$" (zapper-fi:eth/btc)))
 
@@ -45,20 +51,31 @@
 (defvar *unconnected-text* "Connect to your MetaMask Ethereum Wallet")
 
 (defun update-connection-text (object)
-  (let ((address (limbic/javascript/ethereum:selected-address object)))
-    (cond ((and (not address)
-                (connection-data-item object "connected?"))
-           (setf (connection-data-item object "connected?") nil)
+  (let ((ethereum-wallet (connection-data-item object "ethereum-wallet"))
+        (new-address (limbic/javascript/ethereum:selected-address object)))
+    (cond ((and (not (connected? ethereum-wallet))
+                (not (null new-address)))
+           (js-execute object "console.log('got a new ethereum wallet connection')")
+           (setf (connected? ethereum-wallet) t)
+           (setf (address ethereum-wallet) new-address)
+           (setf (inner-html (connection-data-item object "connection-button")) (connected-text new-address)))
+          ((and (connected? ethereum-wallet)
+                (null new-address))
+           (js-execute object "console.log('we're no longer connected to an ethereum wallet')")
+           (setf (connected? ethereum-wallet) nil)
+           (setf (address ethereum-wallet) nil)
            (setf (inner-html (connection-data-item object "connection-button")) *unconnected-text*))
-          ((and address (not (connection-data-item object "connected?")))
-           (setf (connection-data-item object "connected?") t)
-           (setf (inner-html (connection-data-item object "connection-button")) (connected-text address))
-           (attach-blockie-for-address object address)))))
+          ((and (connected? ethereum-wallet)
+                (not (null new-address))
+                (not (null (address ethereum-wallet)))
+                (not (string= (address ethereum-wallet) new-address)))
+           (js-execute object "console.log('connected to a different ethereum wallet now.')")
+           (setf (address ethereum-wallet) new-address)
+           (setf (inner-html (connection-data-item object "connection-button")) (connected-text new-address))))))
 
 (defun connection-text-updater (object)
   (bordeaux-threads:make-thread
    (lambda ()
-     (setf (connection-data-item object "connected?") nil)
      (loop
         (update-connection-text object)
         (sleep 15)))
@@ -85,6 +102,8 @@
 
 (defun menu (menu-bar)
   (let ((menu (create-gui-menu-drop-down menu-bar :content "Ethereum")))
+    (setf (connection-data-item menu "ethereum-wallet")
+          (make-instance 'ethereum-wallet))
     (connection-button menu)
     (btc-price menu)
     (usd-price menu)

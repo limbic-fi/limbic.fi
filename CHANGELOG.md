@@ -1,3 +1,7 @@
+# v0.2.4 - April 17, 2021
+
+Fixing Ethereum wallet connections.
+
 # v0.2.2 - April 17, 2021
 
 Copypasta fix.
