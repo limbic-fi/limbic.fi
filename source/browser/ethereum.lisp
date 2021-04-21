@@ -54,7 +54,7 @@
    (lambda ()
      (loop
         (update-connection-text object)
-        (sleep 15)))
+        (sleep 2)))
    :name "connection-text-updater"))
 
 (defun connect-to-a-wallet (object)
