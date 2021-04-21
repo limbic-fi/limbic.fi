@@ -14,7 +14,7 @@
 (defparameter copyright "Copyright © 2021 Christopher Mark Gore, all rights reserved.")
 (defparameter version-major    0)
 (defparameter version-minor    3)
-(defparameter version-revision 0)
+(defparameter version-revision 1)
 
 (defun version-list ()
   (list version-major version-minor version-revision))
@@ -36,13 +36,17 @@
   :depends-on ("clog" "function-cache" "hunchentoot" "limbic" "sigma" "zapper-fi")
   :components ((:module "source"
                         :components ((:module "browser"
-                                              :components ((:file "bitcoin" :depends-on ("prices"))
+                                              :components ((:file "bitcoin"
+                                                                  :depends-on ("components"))
+                                                           (:module "components"
+                                                                    :components ((:file "prices")))
                                                            (:file "ens")
-                                                           (:file "ethereum" :depends-on ("prices"))
+                                                           (:file "ethereum"
+                                                                  :depends-on ("components"))
                                                            (:file "help")
                                                            (:file "limbic")
-                                                           (:file "main" :depends-on ("bitcoin" "ens" "ethereum" "help" "limbic"))
-                                                           (:file "prices"))
+                                                           (:file "main"
+                                                                  :depends-on ("bitcoin" "ens" "ethereum" "help" "limbic")))
                                               :depends-on ("git" "javascript"))
                                      (:file "git")
                                      (:module "javascript"
